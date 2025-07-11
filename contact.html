@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | xZenShop</title>
+    <style>
+        /* Global Styles */
+        :root {
+            --primary: #FAFAFA;
+            --accent-pink: #F8BBD0;
+            --accent-blue: #81D4FA;
+            --accent-mint: #A5D6A7;
+            --text-dark: #333333;
+            --text-light: #666666;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Nunito', sans-serif;
+        }
+        
+        body {
+            background-color: var(--primary);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header & Navigation */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            margin-left: 10px;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent-pink);
+        }
+        
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: var(--accent-pink);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+        
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(135deg, #F8BBD0, #81D4FA);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .page-header h1 {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+        
+        .breadcrumb li {
+            margin: 0 10px;
+        }
+        
+        .breadcrumb li:after {
+            content: '/';
+            margin-left: 10px;
+            color: rgba(255,255,255,0.7);
+        }
+        
+        .breadcrumb li:last-child:after {
+            content: '';
+        }
+        
+        .breadcrumb a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        /* Contact Section */
+        .contact-section {
+            display: flex;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+        
+        .contact-info {
+            flex: 1;
+            background-color: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .contact-info h2 {
+            margin-bottom: 20px;
+            color: var(--accent-pink);
+        }
+        
+        .contact-method {
+            display: flex;
+            margin-bottom: 25px;
+        }
+        
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background-color: var(--accent-pink);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+        
+        .contact-details h3 {
+            margin-bottom: 5px;
+        }
+        
+        .contact-details p {
+            color: var(--text-light);
+        }
+        
+        .contact-form {
+            flex: 1;
+            background-color: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .contact-form h2 {
+            margin-bottom: 20px;
+            color: var(--accent-pink);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent-pink);
+        }
+        
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background-color: var(--accent-pink);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #f59abd;
+        }
+        
+        /* FAQ Section */
+        .faq-section {
+            background-color: white;
+            padding: 60px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin-bottom: 60px;
+        }
+        
+        .faq-section h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--accent-pink);
+        }
+        
+        .faq-item {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 20px;
+        }
+        
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            padding: 10px 0;
+        }
+        
+        .faq-question h3 {
+            font-size: 18px;
+        }
+        
+        .faq-toggle {
+            width: 25px;
+            height: 25px;
+            background-color: var(--accent-pink);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-left: 15px;
+        }
+        
+        .faq-answer {
+            padding: 10px 0;
+            color: var(--text-light);
+            display: none;
+        }
+        
+        .faq-answer.show {
+            display: block;
+        }
+        
+        /* Map Section */
+        .map-section {
+            margin-bottom: 60px;
+        }
+        
+        .map-container {
+            height: 400px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--text-dark);
+            color: white;
+            padding: 60px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .contact-info p {
+            margin-bottom: 10px;
+            color: #ccc;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-links a {
+            color: white;
+            font-size: 20px;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            color: #ccc;
+            font-size: 14px;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .contact-section {
+                flex-direction: column;
+            }
+            
+            .page-header h1 {
+                font-size: 32px;
+            }
+            
+            .faq-section {
+                padding: 30px;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <i class="fas fa-cloud" style="color: var(--accent-pink);"></i>
+                    <span>xZenShop</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="privacy.html">Privacy</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="login.html">Login</a></li>
+                    <li>
+                        <div class="cart-icon">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="cart-count">0</span>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Contact Us</h1>
+            <ul class="breadcrumb">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="container">
+        <div class="contact-section">
+            <div class="contact-info">
+                <h2>Get in Touch</h2>
+                <p>Have questions, suggestions, or need assistance? We're here to help! Reach out to our friendly team through any of the methods below.</p>
+                
+                <div class="contact-method">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h3>Visit Us</h3>
+                        <p>123 Plush Street<br>Zen City, CA 90210</p>
+                    </div>
+                </div>
+                
+                <div class="contact-method">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h3>Call Us</h3>
+                        <p>+1 (555) 123-4567<br>Mon-Fri: 9AM-6PM PST</p>
+                    </div>
+                </div>
+                
+                <div class="contact-method">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h3>Email Us</h3>
+                        <p>hello@xzenshop.com<br>We typically respond within 24 hours</p>
+                    </div>
+                </div>
+                
+                <div class="contact-method">
+                    <div class="contact-icon">
+                        <i class="fas fa-comment-dots"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h3>Live Chat</h3>
+                        <p>Available Mon-Fri<br>9AM-5PM PST</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="contact-form">
+                <h2>Send Us a Message</h2>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <input type="text" id="subject" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Your Message</label>
+                        <textarea id="message" class="form-control" required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="container">
+        <div class="faq-section">
+            <h2>Frequently Asked Questions</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>What are your shipping options and delivery times?</h3>
+                    <div class="faq-toggle">+</div>
+                </div>
+                <div class="faq-answer">
+                    <p>We offer several shipping options to meet your needs:</p>
+                    <ul>
+                        <li><strong>Standard Shipping:</strong> 3-5 business days ($5.99 or free for orders over $50)</li>
+                        <li><strong>Expedited Shipping:</strong> 2-3 business days ($12.99)</li>
+                        <li><strong>Overnight Shipping:</strong> Next business day ($24.99, order by 12PM PST)</li>
+                    </ul>
+                    <p>Processing time is typically 1-2 business days. During peak seasons, please allow additional processing time.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>What is your return policy?</h3>
+                    <div class="faq-toggle">+</div>
+                </div>
+                <div class="faq-answer">
+                    <p>We want you to be completely satisfied with your purchase. You may return most items within 30 days of delivery for a full refund or exchange. Items must be in original condition with tags attached.</p>
+                    <p>To initiate a return:</p>
+                    <ol>
+                        <li>Contact our customer service team at returns@xzenshop.com</li>
+                        <li>We'll provide you with a return authorization number and instructions</li>
+                        <li>Package your item securely and include the original packing slip</li>
+                        <li>Ship the package back to us using a trackable method</li>
+                    </ol>
+                    <p>Refunds will be processed within 3-5 business days after we receive your return.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>How do I care for my xZenShop plushies?</h3>
+                    <div class="faq-toggle">+</div>
+                </div>
+                <div class="faq-answer">
+                    <p>To keep your plushies looking and feeling their best:</p>
+                    <ul>
+                        <li><strong>Machine Wash:</strong> Most plushies can be washed in cold water on gentle cycle. Use mild detergent.</li>
+                        <li><strong>Drying:</strong> Air dry is recommended. If using a dryer, use low heat and remove promptly.</li>
+                        <li><strong>Spot Cleaning:</strong> For small stains, use a damp cloth with mild soap.</li>
+                        <li><strong>Brushing:</strong> Use a soft-bristle brush to restore fur texture.</li>
+                        <li><strong>Storage:</strong> Keep in a dry place away from direct sunlight to prevent fading.</li>
+                    </ul>
+                    <p>Always check the care tag on your specific product for detailed instructions.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>Are your products safe for children?</h3>
+                    <div class="faq-toggle">+</div>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes, safety is our top priority. All xZenShop products are:</p>
+                    <ul>
+                        <li>Made with child-safe, hypoallergenic materials</li>
+                        <li>Free from harmful chemicals like BPA, phthalates, and lead</li>
+                        <li>Tested to meet or exceed all U.S. and international safety standards</li>
+                        <li>Designed with securely attached parts to prevent choking hazards</li>
+                    </ul>
+                    <p>Each product has age recommendations based on safety considerations. We recommend adult supervision for children under 3 years old.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>Do you offer wholesale or bulk pricing?</h3>
+                    <div class="faq-toggle">+</div>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes! We love working with retailers, schools, hospitals, and other organizations. Our wholesale program offers:</p>
+                    <ul>
+                        <li>Discounts starting at 30% off retail for qualifying orders</li>
+                        <li>Custom branding options for bulk orders</li>
+                        <li>Dropshipping services available</li>
+                        <li>Flexible minimum order quantities</li>
+                    </ul>
+                    <p>To learn more about our wholesale program, please email wholesale@xzenshop.com with your business details and requirements.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>How can I track my order?</h3>
+                    <div class="faq-toggle">+</div>
+                </div>
+                <div class="faq-answer">
+                    <p>Once your order ships, you'll receive a confirmation email with tracking information. You can also track your order by:</p>
+                    <ol>
+                        <li>Logging into your account on our website (if you created one)</li>
+                        <li>Clicking the tracking link in your shipping confirmation email</li>
+                        <li>Contacting our customer service team with your order number</li>
+                    </ol>
+                    <p>Please note that tracking updates may take 24-48 hours to appear after your order ships.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>Do you ship internationally?</h3>
+                    <div class="faq-toggle">+</div>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes, we ship to most countries worldwide. International orders are subject to:</p>
+                    <ul>
+                        <li>Shipping costs calculated at checkout based on destination and package weight</li>
+                        <li>Possible customs fees, duties, or taxes which are the responsibility of the recipient</li>
+                        <li>Longer delivery times (typically 7-21 business days depending on destination)</li>
+                    </ul>
+                    <p>Some restrictions may apply based on destination country regulations. Please contact us before ordering if you have specific questions about shipping to your country.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <h3>What payment methods do you accept?</h3>
+                    <div class="faq-toggle">+</div>
+                </div>
+                <div class="faq-answer">
+                    <p>We accept the following payment methods:</p>
+                    <ul>
+                        <li>All major credit cards (Visa, Mastercard, American Express, Discover)</li>
+                        <li>PayPal</li>
+                        <li>Apple Pay</li>
+                        <li>Google Pay</li>
+                        <li>Shop Pay</li>
+                        <li>xZenShop Gift Cards</li>
+                    </ul>
+                    <p>All payments are processed securely through our encrypted checkout system. We never store your full payment information on our servers.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map Section -->
+    <section class="container map-section">
+        <h2 style="text-align: center; margin-bottom: 20px;">Our Location</h2>
+        <p style="text-align: center; margin-bottom: 30px; color: var(--text-light);">Visit our showroom to see and feel our plushies in person</p>
+        <div class="map-container">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.215256835978!2d-73.98887568459384!3d40.74844017932791!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c259a9b3117469%3A0xd134e199a405a163!2sEmpire%20State%20Building!5e0!3m2!1sen!2sus!4v1629999999999!5m2!1sen!2sus" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Shop</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">New Arrivals</a></li>
+                        <li><a href="#">Best Sellers</a></li>
+                        <li><a href="#">Gift Sets</a></li>
+                        <li><a href="#">Sale Items</a></li>
+                        <li><a href="#">ZenDrop Box</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Help</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Shipping & Returns</a></li>
+                        <li><a href="#">Size Guide</a></li>
+                        <li><a href="#">Product Care</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>About</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Our Story</a></li>
+                        <li><a href="#">ZenCare Promise</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Wholesale Inquiries</a></li>
+                        <li><a href="#">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <div class="contact-info">
+                        <p><i class="fas fa-map-marker-alt"></i> 123 Plush Street, Zen City, CA 90210</p>
+                        <p><i class="fas fa-phone"></i> (555) 123-4567</p>
+                        <p><i class="fas fa-envelope"></i> hello@xzenshop.com</p>
+                        <p><i class="fas fa-clock"></i> Mon-Fri: 9AM-6PM PST</p>
+                    </div>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 xZenShop. All rights reserved. | <a href="privacy.html" style="color: #ccc;">Privacy Policy</a> | <a href="terms.html" style="color: #ccc;">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // FAQ Toggle Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', function() {
+                    const answer = this.nextElementSibling;
+                    const toggle = this.querySelector('.faq-toggle');
+                    
+                    // Toggle the answer visibility
+                    answer.classList.toggle('show');
+                    
+                    // Change the toggle icon
+                    if (answer.classList.contains('show')) {
+                        toggle.textContent = '-';
+                    } else {
+                        toggle.textContent = '+';
+                    }
+                    
+                    // Close other open answers
+                    faqQuestions.forEach(otherQuestion => {
+                        if (otherQuestion !== question) {
+                            otherQuestion.nextElementSibling.classList.remove('show');
+                            otherQuestion.querySelector('.faq-toggle').textContent = '+';
+                        }
+                    });
+                });
+            });
+            
+            // Form submission
+            const contactForm = document.getElementById('contactForm');
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Get form values
+                    const name = document.getElementById('name').value;
+                    const email = document.getElementById('email').value;
+                    const subject = document.getElementById('subject').value;
+                    const message = document.getElementById('message').value;
+                    
+                    // Here you would typically send the form data to your server
+                    // For this example, we'll just show an alert
+                    alert(`Thank you, ${name}! Your message has been sent. We'll respond to you at ${email} as soon as possible.`);
+                    
+                    // Reset the form
+                    contactForm.reset();
+                });
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>xZenShop - Soft. Sweet. Serene.</title>
+    <style>
+        /* Global Styles */
+        :root {
+            --primary: #FAFAFA;
+            --accent-pink: #F8BBD0;
+            --accent-blue: #81D4FA;
+            --accent-mint: #A5D6A7;
+            --text-dark: #333333;
+            --text-light: #666666;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Nunito', sans-serif;
+        }
+        
+        body {
+            background-color: var(--primary);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header & Navigation */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            margin-left: 10px;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent-pink);
+        }
+        
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: var(--accent-pink);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+        
+        /* Cart Dropdown */
+        .cart-dropdown {
+            position: absolute;
+            right: 0;
+            top: 100%;
+            width: 350px;
+            background-color: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            padding: 20px;
+            display: none;
+            z-index: 10;
+        }
+        
+        .cart-dropdown.active {
+            display: block;
+        }
+        
+        .cart-items {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .cart-item {
+            display: flex;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .cart-item img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-right: 15px;
+        }
+        
+        .cart-item-details {
+            flex: 1;
+        }
+        
+        .cart-item-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .cart-item-price {
+            color: var(--text-light);
+            font-size: 14px;
+        }
+        
+        .remove-item {
+            color: #ff6b6b;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .cart-total {
+            margin-top: 20px;
+            font-weight: 600;
+            text-align: right;
+        }
+        
+        .cart-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--text-dark);
+            color: var(--text-dark);
+        }
+        
+        .btn-primary {
+            background-color: var(--accent-pink);
+            color: white;
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--text-dark);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #f59abd;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #F8BBD0, #81D4FA);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            border-radius: 0 0 20px 20px;
+            margin-bottom: 50px;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 20px;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        /* Featured Categories */
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .section-title h2 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .category-card {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .category-img {
+            height: 200px;
+            width: 100%;
+            object-fit: cover;
+        }
+        
+        .category-info {
+            padding: 20px;
+        }
+        
+        .category-info h3 {
+            margin-bottom: 10px;
+        }
+        
+        .category-info p {
+            color: var(--text-light);
+            margin-bottom: 15px;
+        }
+        
+        /* Products Section */
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+        
+        .product-card {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .product-img {
+            height: 250px;
+            width: 100%;
+            object-fit: cover;
+        }
+        
+        .product-info {
+            padding: 20px;
+        }
+        
+        .product-info h3 {
+            margin-bottom: 10px;
+        }
+        
+        .product-price {
+            font-weight: 600;
+            color: var(--accent-pink);
+            margin-bottom: 15px;
+            display: block;
+        }
+        
+        .product-description {
+            color: var(--text-light);
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        
+        .product-actions {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .btn-sm {
+            padding: 8px 15px;
+            font-size: 14px;
+        }
+        
+        /* About Section */
+        .about {
+            background-color: white;
+            padding: 60px 0;
+            margin: 60px 0;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-text h2 {
+            margin-bottom: 20px;
+        }
+        
+        .about-text p {
+            margin-bottom: 15px;
+        }
+        
+        .about-img {
+            flex: 1;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        
+        .about-img img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            margin-bottom: 60px;
+        }
+        
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .testimonial-card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 20px;
+            color: var(--text-dark);
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .author-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+        }
+        
+        .author-info h4 {
+            margin-bottom: 5px;
+        }
+        
+        .author-info p {
+            color: var(--text-light);
+            font-size: 14px;
+        }
+        
+        /* Newsletter */
+        .newsletter {
+            background: linear-gradient(135deg, #A5D6A7, #81D4FA);
+            padding: 60px 0;
+            text-align: center;
+            border-radius: 20px;
+            margin-bottom: 60px;
+            color: white;
+        }
+        
+        .newsletter h2 {
+            margin-bottom: 20px;
+        }
+        
+        .newsletter p {
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+        
+        .newsletter-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .newsletter-form input {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 50px 0 0 50px;
+            font-size: 16px;
+        }
+        
+        .newsletter-form button {
+            padding: 15px 25px;
+            border: none;
+            background-color: var(--accent-pink);
+            color: white;
+            font-weight: 600;
+            border-radius: 0 50px 50px 0;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .newsletter-form button:hover {
+            background-color: #f59abd;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--text-dark);
+            color: white;
+            padding: 60px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .contact-info p {
+            margin-bottom: 10px;
+            color: #ccc;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-links a {
+            color: white;
+            font-size: 20px;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            color: #ccc;
+            font-size: 14px;
+        }
+        
+        /* Disclaimer */
+        .disclaimer {
+            background-color: #f9f9f9;
+            padding: 40px;
+            border-radius: 10px;
+            margin: 60px 0;
+        }
+        
+        .disclaimer h2 {
+            margin-bottom: 20px;
+            color: var(--text-dark);
+        }
+        
+        .disclaimer p {
+            margin-bottom: 15px;
+            color: var(--text-light);
+        }
+        
+        /* Customer Satisfaction */
+        .satisfaction {
+            background-color: white;
+            padding: 40px;
+            border-radius: 10px;
+            margin: 60px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .satisfaction h2 {
+            margin-bottom: 20px;
+            color: var(--text-dark);
+        }
+        
+        .satisfaction p {
+            margin-bottom: 15px;
+            color: var(--text-light);
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .hero p {
+                font-size: 18px;
+            }
+            
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+            
+            .newsletter-form input {
+                border-radius: 50px;
+                margin-bottom: 10px;
+            }
+            
+            .newsletter-form button {
+                border-radius: 50px;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <i class="fas fa-cloud" style="color: var(--accent-pink);"></i>
+                    <span>xZenShop</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="privacy.html">Privacy</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="login.html">Login</a></li>
+                    <li>
+                        <div class="cart-icon">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="cart-count">0</span>
+                            <div class="cart-dropdown">
+                                <div class="cart-items">
+                                    <!-- Cart items will be added here dynamically -->
+                                </div>
+                                <div class="cart-total">
+                                    Total: $0.00
+                                </div>
+                                <div class="cart-actions">
+                                    <button class="btn btn-outline">View Cart</button>
+                                    <button class="btn btn-primary">Checkout</button>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Hug the Calm. Find Your Soft Spot.</h1>
+            <p>Discover our curated collection of plush toys and cozy gifts that bring comfort and joy to all ages.</p>
+            <div class="hero-buttons">
+                <a href="#products" class="btn btn-primary">Shop Plushies</a>
+                <a href="#categories" class="btn btn-outline" style="background-color: white; color: var(--text-dark);">Gifts for All Ages</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Categories -->
+    <section class="container" id="categories">
+        <div class="section-title">
+            <h2>Our Cozy Categories</h2>
+            <p>Find your perfect plush companion in our carefully curated collections</p>
+        </div>
+        <div class="categories">
+            <div class="category-card">
+                <img src="p1.webp" alt="Cuddle Buddies" class="category-img">
+                <div class="category-info">
+                    <h3>Cuddle Buddies</h3>
+                    <p>Classic teddy bears, animal plush, and more for your everyday snuggles.</p>
+                    <a href="#" class="btn btn-outline">Shop Now</a>
+                </div>
+            </div>
+            <div class="category-card">
+                <img src="p2.avif" alt="Fantasy Plush" class="category-img">
+                <div class="category-info">
+                    <h3>Fantasy Plush</h3>
+                    <p>Unicorns, dragons, and magical creatures to spark your imagination.</p>
+                    <a href="#" class="btn btn-outline">Shop Now</a>
+                </div>
+            </div>
+            <div class="category-card">
+                <img src="p3.avif" alt="Mood Pillows" class="category-img">
+                <div class="category-info">
+                    <h3>Mood Pillows</h3>
+                    <p>Expressive pillows and plush decor to match your every emotion.</p>
+                    <a href="#" class="btn btn-outline">Shop Now</a>
+                </div>
+            </div>
+            <div class="category-card">
+                <img src="p4.webp" alt="Mini Zen Pals" class="category-img">
+                <div class="category-info">
+                    <h3>Mini Zen Pals</h3>
+                    <p>Travel-size plushies and keychains to bring comfort wherever you go.</p>
+                    <a href="#" class="btn btn-outline">Shop Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section class="container" id="products">
+        <div class="section-title">
+            <h2>Featured Plushies</h2>
+            <p>Our most loved cuddly companions</p>
+        </div>
+        <div class="products">
+            <div class="product-card">
+                <img src="p5.webp" alt="Cloudy the Unicorn" class="product-img">
+                <div class="product-info">
+                    <h3>Cloudy the Unicorn</h3>
+                    <span class="product-price">$29.99</span>
+                    <p class="product-description">Ultra-soft unicorn plush with rainbow mane and tail. Perfect for dreamers of all ages.</p>
+                    <div class="product-actions">
+                        <button class="btn btn-sm btn-outline">Details</button>
+                        <button class="btn btn-sm btn-primary add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card">
+                <img src="p6.webp" alt="Zen Panda" class="product-img">
+                <div class="product-info">
+                    <h3>Zen Panda</h3>
+                    <span class="product-price">$24.99</span>
+                    <p class="product-description">A calming panda friend with weighted beans for anxiety relief and better sleep.</p>
+                    <div class="product-actions">
+                        <button class="btn btn-sm btn-outline">Details</button>
+                        <button class="btn btn-sm btn-primary add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card">
+                <img src="p7.avif" alt="Starry Night Pillow" class="product-img">
+                <div class="product-info">
+                    <h3>Starry Night Pillow</h3>
+                    <span class="product-price">$34.99</span>
+                    <p class="product-description">Pastel star-shaped pillow filled with memory foam for ultimate comfort.</p>
+                    <div class="product-actions">
+                        <button class="btn btn-sm btn-outline">Details</button>
+                        <button class="btn btn-sm btn-primary add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card">
+                <img src="p8.webp" alt="Mini Dino Buddy" class="product-img">
+                <div class="product-info">
+                    <h3>Mini Dino Buddy</h3>
+                    <span class="product-price">$14.99</span>
+                    <p class="product-description">Pocket-sized dinosaur plush with clip-on for backpacks or keys.</p>
+                    <div class="product-actions">
+                        <button class="btn btn-sm btn-outline">Details</button>
+                        <button class="btn btn-sm btn-primary add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card">
+                <img src="p9.webp" alt="Moonlight Bunny" class="product-img">
+                <div class="product-info">
+                    <h3>Moonlight Bunny</h3>
+                    <span class="product-price">$27.99</span>
+                    <p class="product-description">Glow-in-the-dark bunny plush that provides comfort through the night.</p>
+                    <div class="product-actions">
+                        <button class="btn btn-sm btn-outline">Details</button>
+                        <button class="btn btn-sm btn-primary add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card">
+                <img src="p10.webp" alt="Emoji Cloud Pillow" class="product-img">
+                <div class="product-info">
+                    <h3>Emoji Cloud Pillow</h3>
+                    <span class="product-price">$22.99</span>
+                    <p class="product-description">Express your mood with these soft cloud-shaped emoji pillows.</p>
+                    <div class="product-actions">
+                        <button class="btn btn-sm btn-outline">Details</button>
+                        <button class="btn btn-sm btn-primary add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card">
+                <img src="p11.avif" alt="Sleepover Kit" class="product-img">
+                <div class="product-info">
+                    <h3>Sleepover Kit</h3>
+                    <span class="product-price">$49.99</span>
+                    <p class="product-description">Includes plushie, eye mask, and mini pillow for the perfect sleepover.</p>
+                    <div class="product-actions">
+                        <button class="btn btn-sm btn-outline">Details</button>
+                        <button class="btn btn-sm btn-primary add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+            <div class="product-card">
+                <img src="p12.webp" alt="Galaxy Dragon" class="product-img">
+                <div class="product-info">
+                    <h3>Galaxy Dragon</h3>
+                    <span class="product-price">$32.99</span>
+                    <p class="product-description">Mystical dragon plush with shimmering galaxy print fabric.</p>
+                    <div class="product-actions">
+                        <button class="btn btn-sm btn-outline">Details</button>
+                        <button class="btn btn-sm btn-primary add-to-cart">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>Our Story</h2>
+                    <p>xZenShop was born from a simple idea: everyone deserves comfort. In a world that can often feel overwhelming, we believe in the power of softness to bring calm and joy.</p>
+                    <p>Founded in 2018 by two childhood friends who bonded over their love of plush toys, xZenShop has grown from a small Etsy shop to a beloved brand serving thousands of customers worldwide.</p>
+                    <p>Each of our plushies is carefully selected or designed with three principles in mind: Softness, Sweetness, and Serenity. We work with ethical manufacturers who share our commitment to quality and sustainability.</p>
+                    <a href="about.html" class="btn btn-primary">Learn More About Us</a>
+                </div>
+                <div class="about-img">
+                    <img src="p13.avif" alt="About xZenShop">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="container testimonials">
+        <div class="section-title">
+            <h2>What Our Customers Say</h2>
+            <p>Real stories from our xZen family</p>
+        </div>
+        <div class="testimonial-grid">
+            <div class="testimonial-card">
+                <p class="testimonial-text">"My daughter hasn't slept without her Zen Panda since it arrived. The quality is amazing and it's held up through many washes. Thank you for creating such a special product!"</p>
+                <div class="testimonial-author">
+                    <div class="author-info">
+                        <h4>Sge J.</h4>
+                        <p>Verified Customer</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <p class="testimonial-text">"As a college student dealing with anxiety, my Moonlight Bunny has been a game-changer. The glow-in-the-dark feature is so comforting when I'm stressed at night."</p>
+                <div class="testimonial-author">
+                    <div class="author-info">
+                        <h4>Ery T.</h4>
+                        <p>Verified Customer</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <p class="testimonial-text">"I bought the Sleepover Kit for my niece's birthday and she hasn't stopped talking about it. The packaging was beautiful and the products were even better than expected."</p>
+                <div class="testimonial-author">
+                    <div class="author-info">
+                        <h4>dgel R.</h4>
+                        <p>Verified Customer</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ZenCare Promise -->
+    <section class="satisfaction">
+        <div class="container">
+            <h2>Our ZenCare Promise</h2>
+            <p>At xZenShop, your satisfaction is our top priority. We stand behind every product we sell and want you to be completely happy with your purchase.</p>
+            <p><strong>Quality Assurance:</strong> Each plush undergoes rigorous quality checks to ensure it meets our high standards for softness, durability, and safety.</p>
+            <p><strong>Easy Returns:</strong> Not completely satisfied? We offer a 30-day return policy with no questions asked.</p>
+            <p><strong>Safe Materials:</strong> All our products are made with child-safe, hypoallergenic materials that are free from harmful chemicals.</p>
+            <p><strong>Washable Design:</strong> Most of our plushies are machine washable (check individual product care instructions).</p>
+            <p><strong>Customer Support:</strong> Our friendly support team is available 7 days a week to answer any questions or concerns.</p>
+            <p>We believe in the power of comfort and strive to create products that bring joy and relaxation to your life. If for any reason we fall short of your expectations, please let us know so we can make it right.</p>
+        </div>
+    </section>
+
+    <!-- Disclaimer -->
+    <section class="disclaimer">
+        <div class="container">
+            <h2>Disclaimer</h2>
+            <p>The information contained on xZenShop.com website (the "Service") is for general information purposes only.</p>
+            <p>xZenShop assumes no responsibility for errors or omissions in the contents on the Service. In no event shall xZenShop be liable for any special, direct, indirect, consequential, or incidental damages or any damages whatsoever, whether in an action of contract, negligence or other tort, arising out of or in connection with the use of the Service or the contents of the Service. xZenShop reserves the right to make additions, deletions, or modification to the contents on the Service at any time without prior notice.</p>
+            <p>xZenShop does not warrant that the website is free of viruses or other harmful components. All products are intended for use as plush toys and comfort items only. They are not medical devices and are not intended to diagnose, treat, cure, or prevent any disease or medical condition.</p>
+            <p>While we make every effort to ensure that our product images and descriptions are accurate, slight variations in color, texture, or size may occur. Product dimensions are approximate.</p>
+            <p>All plush toys are intended for children ages 3 and up unless otherwise specified. Some products may contain small parts that could pose a choking hazard for younger children. Adult supervision is recommended.</p>
+            <p>The testimonials and reviews on our website reflect the real-life experiences of customers who have used our products. However, individual results may vary. We do not claim, nor should you assume, that any individual results are typical.</p>
+            <p>External links on our website are provided for your convenience. We have no control over the content of these sites and accept no responsibility for them or for any loss or damage that may arise from your use of them.</p>
+            <p>Prices and availability of products are subject to change without notice. We reserve the right to discontinue any product at any time. Any offer for any product made on this site is void where prohibited.</p>
+            <p>By using our website and purchasing our products, you acknowledge that you have read and understood this disclaimer and agree to its terms.</p>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+        <div class="container">
+            <h2>Join Our Cozy Community</h2>
+            <p>Subscribe to get 10% off your first order and receive updates on new arrivals, special offers, and plushie care tips.</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Your email address">
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Shop</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">New Arrivals</a></li>
+                        <li><a href="#">Best Sellers</a></li>
+                        <li><a href="#">Gift Sets</a></li>
+                        <li><a href="#">Sale Items</a></li>
+                        <li><a href="#">ZenDrop Box</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Help</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Shipping & Returns</a></li>
+                        <li><a href="#">Size Guide</a></li>
+                        <li><a href="#">Product Care</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>About</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Our Story</a></li>
+                        <li><a href="#">ZenCare Promise</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Wholesale Inquiries</a></li>
+                        <li><a href="#">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <div class="contact-info">
+                        <p><i class="fas fa-map-marker-alt"></i> 123 Plush Street, Zen City, CA 90210</p>
+                        <p><i class="fas fa-phone"></i> (555) 123-4567</p>
+                        <p><i class="fas fa-envelope"></i> hello@xzenshop.com</p>
+                        <p><i class="fas fa-clock"></i> Mon-Fri: 9AM-6PM PST</p>
+                    </div>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 xZenShop. All rights reserved. | <a href="privacy.html" style="color: #ccc;">Privacy Policy</a> | <a href="terms.html" style="color: #ccc;">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Cart functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const cartIcon = document.querySelector('.cart-icon');
+            const cartDropdown = document.querySelector('.cart-dropdown');
+            const cartCount = document.querySelector('.cart-count');
+            const cartItems = document.querySelector('.cart-items');
+            const cartTotal = document.querySelector('.cart-total');
+            const addToCartButtons = document.querySelectorAll('.add-to-cart');
+            
+            let cart = [];
+            
+            // Toggle cart dropdown
+            cartIcon.addEventListener('click', function(e) {
+                e.stopPropagation();
+                cartDropdown.classList.toggle('active');
+            });
+            
+            // Close cart when clicking outside
+            document.addEventListener('click', function() {
+                cartDropdown.classList.remove('active');
+            });
+            
+            // Add to cart functionality
+            addToCartButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const productCard = this.closest('.product-card');
+                    const productName = productCard.querySelector('h3').textContent;
+                    const productPrice = productCard.querySelector('.product-price').textContent;
+                    const productImage = productCard.querySelector('.product-img').src;
+                    
+                    // Check if product already in cart
+                    const existingItem = cart.find(item => item.name === productName);
+                    
+                    if (existingItem) {
+                        existingItem.quantity += 1;
+                    } else {
+                        cart.push({
+                            name: productName,
+                            price: parseFloat(productPrice.replace('$', '')),
+                            image: productImage,
+                            quantity: 1
+                        });
+                    }
+                    
+                    updateCart();
+                    cartDropdown.classList.add('active');
+                });
+            });
+            
+            // Update cart UI
+            function updateCart() {
+                // Clear current items
+                cartItems.innerHTML = '';
+                
+                // Add new items
+                let total = 0;
+                cart.forEach(item => {
+                    const itemTotal = item.price * item.quantity;
+                    total += itemTotal;
+                    
+                    const cartItemElement = document.createElement('div');
+                    cartItemElement.className = 'cart-item';
+                    cartItemElement.innerHTML = `
+                        <img src="${item.image}" alt="${item.name}">
+                        <div class="cart-item-details">
+                            <div class="cart-item-title">${item.name}</div>
+                            <div class="cart-item-price">$${item.price.toFixed(2)} x ${item.quantity}</div>
+                            <div class="remove-item" data-name="${item.name}">
+                                <i class="fas fa-trash-alt"></i> Remove
+                            </div>
+                        </div>
+                    `;
+                    cartItems.appendChild(cartItemElement);
+                });
+                
+                // Update total and count
+                cartTotal.textContent = `Total: $${total.toFixed(2)}`;
+                cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+                
+                // Add event listeners to remove buttons
+                document.querySelectorAll('.remove-item').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const itemName = this.getAttribute('data-name');
+                        cart = cart.filter(item => item.name !== itemName);
+                        updateCart();
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>

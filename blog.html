@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>xZenShop Blog - Comfort, Joy & Inspiration</title>
+    <style>
+        /* Global Styles */
+        :root {
+            --primary: #FAFAFA;
+            --accent-pink: #F8BBD0;
+            --accent-blue: #81D4FA;
+            --accent-mint: #A5D6A7;
+            --text-dark: #333333;
+            --text-light: #666666;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Nunito', sans-serif;
+        }
+        
+        body {
+            background-color: var(--primary);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header & Navigation */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            margin-left: 10px;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent-pink);
+        }
+        
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: var(--accent-pink);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+        
+        /* Cart Dropdown */
+        .cart-dropdown {
+            position: absolute;
+            right: 0;
+            top: 100%;
+            width: 350px;
+            background-color: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            padding: 20px;
+            display: none;
+            z-index: 10;
+        }
+        
+        .cart-dropdown.active {
+            display: block;
+        }
+        
+        .cart-items {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .cart-item {
+            display: flex;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .cart-item img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-right: 15px;
+        }
+        
+        .cart-item-details {
+            flex: 1;
+        }
+        
+        .cart-item-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .cart-item-price {
+            color: var(--text-light);
+            font-size: 14px;
+        }
+        
+        .remove-item {
+            color: #ff6b6b;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .cart-total {
+            margin-top: 20px;
+            font-weight: 600;
+            text-align: right;
+        }
+        
+        .cart-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--text-dark);
+            color: var(--text-dark);
+        }
+        
+        .btn-primary {
+            background-color: var(--accent-pink);
+            color: white;
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--text-dark);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #f59abd;
+        }
+        
+        /* Blog Hero */
+        .blog-hero {
+            background: linear-gradient(135deg, #A5D6A7, #81D4FA);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            border-radius: 0 0 20px 20px;
+            margin-bottom: 50px;
+        }
+        
+        .blog-hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        .blog-hero p {
+            font-size: 20px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* Blog Content */
+        .blog-container {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+        
+        @media (max-width: 768px) {
+            .blog-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Blog Posts */
+        .blog-posts {
+            display: grid;
+            gap: 40px;
+        }
+        
+        .blog-post {
+            background-color: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .blog-post:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .post-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        
+        .post-content {
+            padding: 30px;
+        }
+        
+        .post-meta {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            color: var(--text-light);
+            font-size: 14px;
+        }
+        
+        .post-meta span {
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .post-meta i {
+            margin-right: 5px;
+        }
+        
+        .post-content h2 {
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+        
+        .post-excerpt {
+            margin-bottom: 20px;
+            color: var(--text-light);
+        }
+        
+        .read-more {
+            color: var(--accent-pink);
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .read-more i {
+            margin-left: 5px;
+            transition: transform 0.3s;
+        }
+        
+        .read-more:hover i {
+            transform: translateX(5px);
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            display: grid;
+            gap: 30px;
+            align-content: start;
+        }
+        
+        .sidebar-widget {
+            background-color: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .widget-title {
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+            font-size: 18px;
+        }
+        
+        .categories-list {
+            list-style: none;
+        }
+        
+        .categories-list li {
+            margin-bottom: 10px;
+        }
+        
+        .categories-list a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .categories-list a:hover {
+            color: var(--accent-pink);
+        }
+        
+        .categories-list span {
+            background-color: var(--primary);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 12px;
+        }
+        
+        .popular-posts {
+            list-style: none;
+        }
+        
+        .popular-post {
+            display: flex;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .popular-post:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .popular-post-img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-right: 15px;
+        }
+        
+        .popular-post-title {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .popular-post-date {
+            color: var(--text-light);
+            font-size: 12px;
+        }
+        
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .tag {
+            background-color: var(--primary);
+            color: var(--text-light);
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 14px;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .tag:hover {
+            background-color: var(--accent-pink);
+            color: white;
+        }
+        
+        /* Newsletter */
+        .newsletter {
+            background: linear-gradient(135deg, #F8BBD0, #81D4FA);
+            padding: 60px 0;
+            text-align: center;
+            border-radius: 20px;
+            margin-bottom: 60px;
+            color: white;
+        }
+        
+        .newsletter h2 {
+            margin-bottom: 20px;
+        }
+        
+        .newsletter p {
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+        
+        .newsletter-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .newsletter-form input {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 50px 0 0 50px;
+            font-size: 16px;
+        }
+        
+        .newsletter-form button {
+            padding: 15px 25px;
+            border: none;
+            background-color: var(--accent-blue);
+            color: white;
+            font-weight: 600;
+            border-radius: 0 50px 50px 0;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .newsletter-form button:hover {
+            background-color: #5fc1f1;
+        }
+        
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 60px;
+        }
+        
+        .page-numbers {
+            display: flex;
+            list-style: none;
+        }
+        
+        .page-numbers li {
+            margin: 0 5px;
+        }
+        
+        .page-numbers a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .page-numbers a:hover,
+        .page-numbers a.active {
+            background-color: var(--accent-pink);
+            color: white;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--text-dark);
+            color: white;
+            padding: 60px 0 20px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .contact-info p {
+            margin-bottom: 10px;
+            color: #ccc;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-links a {
+            color: white;
+            font-size: 20px;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            color: #ccc;
+            font-size: 14px;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .blog-hero h1 {
+                font-size: 36px;
+            }
+            
+            .blog-hero p {
+                font-size: 18px;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+            
+            .newsletter-form input {
+                border-radius: 50px;
+                margin-bottom: 10px;
+            }
+            
+            .newsletter-form button {
+                border-radius: 50px;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <i class="fas fa-cloud" style="color: var(--accent-pink);"></i>
+                    <span>xZenShop</span>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="blog.html" class="active">Blog</a></li>
+                    <li><a href="privacy.html">Privacy</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="login.html">Login</a></li>
+                    <li>
+                        <div class="cart-icon">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span class="cart-count">0</span>
+                            <div class="cart-dropdown">
+                                <div class="cart-items">
+                                    <!-- Cart items will be added here dynamically -->
+                                </div>
+                                <div class="cart-total">
+                                    Total: $0.00
+                                </div>
+                                <div class="cart-actions">
+                                    <button class="btn btn-outline">View Cart</button>
+                                    <button class="btn btn-primary">Checkout</button>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Blog Hero -->
+    <section class="blog-hero">
+        <div class="container">
+            <h1>xZenShop Blog</h1>
+            <p>Discover stories, tips, and inspiration about finding comfort and joy in everyday life</p>
+        </div>
+    </section>
+
+    <!-- Blog Content -->
+    <div class="container blog-container">
+        <main class="blog-posts">
+            <!-- Blog Post 1 -->
+            <article class="blog-post">
+                <img src="b1.avif" alt="The Science of Comfort" class="post-image">
+                <div class="post-content">
+                    <div class="post-meta">
+                        <span><i class="far fa-calendar-alt"></i> June 15, 2023</span>
+                        <span><i class="far fa-user"></i> By Sarah Johnson</span>
+                        <span><i class="far fa-comment"></i> 12 Comments</span>
+                    </div>
+                    <h2>The Science of Comfort: Why We Need Softness in Our Lives</h2>
+                    <p class="post-excerpt">Research shows that tactile comfort reduces stress and anxiety. In this post, we explore the psychology behind why soft textures and plush companions provide such powerful emotional benefits for both children and adults.</p>
+                    <a href="post-science-of-comfort.html" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </article>
+            
+            <!-- Blog Post 2 -->
+            <article class="blog-post">
+                <img src="b2.webp" alt="Plush Care Guide" class="post-image">
+                <div class="post-content">
+                    <div class="post-meta">
+                        <span><i class="far fa-calendar-alt"></i> May 28, 2023</span>
+                        <span><i class="far fa-user"></i> By Michael Chen</span>
+                        <span><i class="far fa-comment"></i> 8 Comments</span>
+                    </div>
+                    <h2>Your Ultimate Guide to Plush Toy Care & Maintenance</h2>
+                    <p class="post-excerpt">Learn how to properly clean, store, and maintain your plush toys to keep them soft and cuddly for years to come. Our comprehensive guide covers everything from washing techniques to repair tips.</p>
+                    <a href="post-plush-care-guide.html" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </article>
+            
+            <!-- Blog Post 3 -->
+            <article class="blog-post">
+                <img src="b3.webp" alt="Plush for Adults" class="post-image">
+                <div class="post-content">
+                    <div class="post-meta">
+                        <span><i class="far fa-calendar-alt"></i> April 10, 2023</span>
+                        <span><i class="far fa-user"></i> By Emma Rodriguez</span>
+                        <span><i class="far fa-comment"></i> 24 Comments</span>
+                    </div>
+                    <h2>Why Adults Should Embrace Plush Toys: Breaking the Stigma</h2>
+                    <p class="post-excerpt">Plush toys aren't just for kids! Discover how adults around the world are using plush companions for stress relief, home decor, and emotional support - and why there's no shame in the plush game.</p>
+                    <a href="post-plush-for-adults.html" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </article>
+            
+            <!-- Blog Post 4 -->
+            <article class="blog-post">
+                <img src="b4.webp" alt="Eco-Friendly Plush" class="post-image">
+                <div class="post-content">
+                    <div class="post-meta">
+                        <span><i class="far fa-calendar-alt"></i> March 22, 2023</span>
+                        <span><i class="far fa-user"></i> By David Park</span>
+                        <span><i class="far fa-comment"></i> 15 Comments</span>
+                    </div>
+                    <h2>Sustainable Softness: Our Journey to Eco-Friendly Plush</h2>
+                    <p class="post-excerpt">At xZenShop, we're committed to sustainability. Learn about our transition to organic materials, recycled stuffing, and environmentally responsible manufacturing processes.</p>
+                    <a href="post-eco-friendly-plush.html" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </article>
+            
+            <!-- Blog Post 5 -->
+            <article class="blog-post">
+                <img src="b5.webp" alt="Plush Gift Guide" class="post-image">
+                <div class="post-content">
+                    <div class="post-meta">
+                        <span><i class="far fa-calendar-alt"></i> February 14, 2023</span>
+                        <span><i class="far fa-user"></i> By Lisa Wong</span>
+                        <span><i class="far fa-comment"></i> 7 Comments</span>
+                    </div>
+                    <h2>The Perfect Plush: A Gift Guide for Every Personality</h2>
+                    <p class="post-excerpt">Struggling to find the perfect plush gift? Our comprehensive guide matches personality types with ideal plush companions, from adventurous dragons to calming clouds.</p>
+                    <a href="post-plush-gift-guide.html" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </article>
+            
+            <!-- Pagination -->
+            <div class="pagination">
+                <ul class="page-numbers">
+                    <li><a href="#" class="active">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i></a></li>
+                </ul>
+            </div>
+        </main>
+        
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <!-- Search Widget -->
+            <div class="sidebar-widget">
+                <h3 class="widget-title">Search</h3>
+                <form class="search-form">
+                    <input type="text" placeholder="Search blog..." style="width: 100%; padding: 10px; border: 1px solid #eee; border-radius: 50px;">
+                </form>
+            </div>
+            
+            <!-- Categories Widget -->
+            <div class="sidebar-widget">
+                <h3 class="widget-title">Categories</h3>
+                <ul class="categories-list">
+                    <li><a href="#">Plush Care <span>8</span></a></li>
+                    <li><a href="#">Wellbeing <span>12</span></a></li>
+                    <li><a href="#">Gift Guides <span>5</span></a></li>
+                    <li><a href="#">Behind the Scenes <span>7</span></a></li>
+                    <li><a href="#">Sustainability <span>9</span></a></li>
+                    <li><a href="#">New Releases <span>14</span></a></li>
+                </ul>
+            </div>
+            
+            <!-- Popular Posts Widget -->
+            <div class="sidebar-widget">
+                <h3 class="widget-title">Popular Posts</h3>
+                <ul class="popular-posts">
+                    <li class="popular-post">
+                        <div>
+                            <h4 class="popular-post-title">10 Ways Plush Toys Help With Anxiety</h4>
+                            <p class="popular-post-date">April 5, 2023</p>
+                        </div>
+                    </li>
+                    <li class="popular-post">
+                        <div>
+                            <h4 class="popular-post-title">Our Top Picks for Sleep Companions</h4>
+                            <p class="popular-post-date">March 18, 2023</p>
+                        </div>
+                    </li>
+                    <li class="popular-post">
+                        <div>
+                            <h4 class="popular-post-title">The History of Teddy Bears</h4>
+                            <p class="popular-post-date">February 28, 2023</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Tags Widget -->
+            <div class="sidebar-widget">
+                <h3 class="widget-title">Tags</h3>
+                <div class="tags">
+                    <a href="#" class="tag">Comfort</a>
+                    <a href="#" class="tag">Wellbeing</a>
+                    <a href="#" class="tag">Gifts</a>
+                    <a href="#" class="tag">Sleep</a>
+                    <a href="#" class="tag">Anxiety Relief</a>
+                    <a href="#" class="tag">Eco-Friendly</a>
+                    <a href="#" class="tag">Softness</a>
+                    <a href="#" class="tag">Collection</a>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+        <div class="container">
+            <h2>Get Cozy With Our Newsletter</h2>
+            <p>Subscribe for plush care tips, new product alerts, and exclusive offers delivered to your inbox.</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Your email address">
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Shop</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">New Arrivals</a></li>
+                        <li><a href="#">Best Sellers</a></li>
+                        <li><a href="#">Gift Sets</a></li>
+                        <li><a href="#">Sale Items</a></li>
+                        <li><a href="#">ZenDrop Box</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Help</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">FAQs</a></li>
+                        <li><a href="#">Shipping & Returns</a></li>
+                        <li><a href="#">Size Guide</a></li>
+                        <li><a href="#">Product Care</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>About</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Our Story</a></li>
+                        <li><a href="#">ZenCare Promise</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Wholesale Inquiries</a></li>
+                        <li><a href="#">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <div class="contact-info">
+                        <p><i class="fas fa-map-marker-alt"></i> 123 Plush Street, Zen City, CA 90210</p>
+                        <p><i class="fas fa-phone"></i> (555) 123-4567</p>
+                        <p><i class="fas fa-envelope"></i> hello@xzenshop.com</p>
+                        <p><i class="fas fa-clock"></i> Mon-Fri: 9AM-6PM PST</p>
+                    </div>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 xZenShop. All rights reserved. | <a href="privacy.html" style="color: #ccc;">Privacy Policy</a> | <a href="terms.html" style="color: #ccc;">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Cart functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const cartIcon = document.querySelector('.cart-icon');
+            const cartDropdown = document.querySelector('.cart-dropdown');
+            const cartCount = document.querySelector('.cart-count');
+            const cartItems = document.querySelector('.cart-items');
+            const cartTotal = document.querySelector('.cart-total');
+            
+            let cart = [];
+            
+            // Toggle cart dropdown
+            cartIcon.addEventListener('click', function(e) {
+                e.stopPropagation();
+                cartDropdown.classList.toggle('active');
+            });
+            
+            // Close cart when clicking outside
+            document.addEventListener('click', function() {
+                cartDropdown.classList.remove('active');
+            });
+            
+            // Update cart UI
+            function updateCart() {
+                // Clear current items
+                cartItems.innerHTML = '';
+                
+                // Add new items
+                let total = 0;
+                cart.forEach(item => {
+                    const itemTotal = item.price * item.quantity;
+                    total += itemTotal;
+                    
+                    const cartItemElement = document.createElement('div');
+                    cartItemElement.className = 'cart-item';
+                    cartItemElement.innerHTML = `
+                        <img src="${item.image}" alt="${item.name}">
+                        <div class="cart-item-details">
+                            <div class="cart-item-title">${item.name}</div>
+                            <div class="cart-item-price">$${item.price.toFixed(2)} x ${item.quantity}</div>
+                            <div class="remove-item" data-name="${item.name}">
+                                <i class="fas fa-trash-alt"></i> Remove
+                            </div>
+                        </div>
+                    `;
+                    cartItems.appendChild(cartItemElement);
+                });
+                
+                // Update total and count
+                cartTotal.textContent = `Total: $${total.toFixed(2)}`;
+                cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+                
+                // Add event listeners to remove buttons
+                document.querySelectorAll('.remove-item').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const itemName = this.getAttribute('data-name');
+                        cart = cart.filter(item => item.name !== itemName);
+                        updateCart();
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>
